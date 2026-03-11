@@ -15,13 +15,15 @@ jobs:
 
       - name: Update formula
         run: |
-          cat > Formula/asc.rb << 'FORMULA'
-          class Asc < Formula
+          cat > Formula/asc-ai.rb << 'FORMULA'
+          class AscAi < Formula
             desc "AI-native CLI for App Store Connect"
             homepage "https://github.com/iamazhar/appstore-connect-cli"
             url "${{ github.event.client_payload.url }}"
             sha256 "${{ github.event.client_payload.sha256 }}"
             license "MIT"
+
+            conflicts_with "asc", because: "both install an `asc` binary"
 
             def install
               bin.install "asc"
@@ -37,6 +39,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add Formula/asc.rb
-          git commit -m "Update asc to ${{ github.event.client_payload.version }}"
+          git add Formula/asc-ai.rb
+          git commit -m "Update asc-ai to ${{ github.event.client_payload.version }}"
           git push
