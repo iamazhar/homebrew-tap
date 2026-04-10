@@ -1,7 +1,7 @@
 class MuscleMemory < Formula
   desc "Procedural memory for coding agents"
   homepage "https://github.com/iamazhar/muscle-memory"
-  version "0.3.0"
+  version "0.3.1"
   license "MIT"
 
   on_macos do
