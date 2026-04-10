@@ -1,20 +1,23 @@
 class MuscleMemory < Formula
   desc "Procedural memory for coding agents"
   homepage "https://github.com/iamazhar/muscle-memory"
-  version "0.3.1"
+  url "https://github.com/iamazhar/muscle-memory/archive/refs/tags/v0.3.1.tar.gz"
   license "MIT"
 
-  on_macos do
-    url "https://github.com/iamazhar/muscle-memory/releases/download/v#{version}/mm-macos-arm64.tar.gz"
-  end
-
-  on_linux do
-    url "https://github.com/iamazhar/muscle-memory/releases/download/v#{version}/mm-linux-x86_64.tar.gz"
-  end
+  depends_on "python@3.12"
+  depends_on "uv"
 
   def install
-    Dir.glob("mm-*").each do |f|
-      bin.install f => "mm"
+    system "uv", "build", "--wheel"
+    whl = Dir["dist/*.whl"].first
+    system "uv", "pip", "install", whl, "--target", libexec/"lib"
+
+    # Create wrapper scripts that set PYTHONPATH
+    %w[mm muscle-memory].each do |cmd|
+      (bin/cmd).write <<~BASH
+        #!/bin/bash
+        PYTHONPATH="#{libexec}/lib" exec "#{Formula["python@3.12"].bin}/python3.12" -m muscle_memory "$@"
+      BASH
     end
   end
 
