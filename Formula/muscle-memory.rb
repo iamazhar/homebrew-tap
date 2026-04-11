@@ -1,7 +1,7 @@
 class MuscleMemory < Formula
   desc "Procedural memory for coding agents"
   homepage "https://github.com/iamazhar/muscle-memory"
-  url "https://github.com/iamazhar/muscle-memory/archive/refs/tags/v0.7.0.tar.gz"
+  url "https://github.com/iamazhar/muscle-memory/archive/refs/tags/v0.7.1.tar.gz"
   license "MIT"
 
   depends_on "python@3.12"
